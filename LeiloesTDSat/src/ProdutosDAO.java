@@ -16,6 +16,10 @@ import java.util.ArrayList;
 
 
 public class ProdutosDAO {
+
+    static boolean atualizarProduto(ProdutosDTO produto) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
     Connection conn;
     PreparedStatement prep;
