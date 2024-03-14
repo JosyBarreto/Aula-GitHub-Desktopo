@@ -122,4 +122,47 @@ static boolean atualizarProduto(int id, String novoStatus) {
             }
         }
     }
+public ArrayList<ProdutosDTO> listarProdutosVendidos() {
+        Connection conn = null;
+        PreparedStatement prep = null;
+        ResultSet rs = null;
+        ArrayList<ProdutosDTO> produtosVendidos = new ArrayList<>();
+
+        try {
+            conn = new conectaDAO().connectDB();
+
+            String sql = "SELECT * FROM produtos WHERE status = ?";
+            prep = conn.prepareStatement(sql);
+            prep.setString(1, "Vendido");
+            rs = prep.executeQuery();
+
+            while (rs.next()) {
+                ProdutosDTO produto = new ProdutosDTO();
+                produto.setId(rs.getInt("id"));
+                produto.setNome(rs.getString("nome"));
+                produto.setValor(rs.getInt("valor"));
+                produto.setStatus(rs.getString("status"));
+
+                produtosVendidos.add(produto);
+            }
+        } catch (SQLException erro) {
+            System.out.println("Erro ao listar produtos vendidos: " + erro.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (prep != null) {
+                    prep.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                System.out.println("Erro ao fechar conexão: " + e.getMessage());
+            }
+        }
+
+        return produtosVendidos;
+    }
 }
