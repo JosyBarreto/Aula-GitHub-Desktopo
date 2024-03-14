@@ -84,4 +84,42 @@ public class ProdutosDAO {
 
         return listagem;
     }
+
+static boolean atualizarProduto(int id, String novoStatus) {
+        Connection conn = null;
+        PreparedStatement prep = null;
+
+        try {
+            conn = new conectaDAO().connectDB();
+
+            String sql = "UPDATE produtos SET status = ? WHERE id = ?";
+            prep = conn.prepareStatement(sql);
+            prep.setString(1, novoStatus);
+            prep.setInt(2, id);
+
+            int rowsAffected = prep.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Status do produto atualizado para: " + novoStatus);
+                return true;
+            } else {
+                System.out.println("Nenhum produto foi atualizado.");
+                return false;
+            }
+        } catch (SQLException erro) {
+            System.out.println("Erro ao atualizar produto: " + erro.getMessage());
+            return false;
+        } finally {
+            try {
+                if (prep != null) {
+                    prep.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                System.out.println("Erro ao fechar conexão: " + e.getMessage());
+            }
+        }
+    }
 }
