@@ -222,4 +222,25 @@ public class listagemVIEW extends javax.swing.JFrame {
         }
     
     }
+private void listarProdutosVendidos() {
+    try {
+        ProdutosDAO produtosdao = new ProdutosDAO();
+        
+        DefaultTableModel model = (DefaultTableModel) listaProdutos.getModel();
+        model.setNumRows(0);
+        
+        ArrayList<ProdutosDTO> listagem = produtosdao.listarProdutosVendidos();
+        
+        for (int i = 0; i < listagem.size(); i++) {
+            model.addRow(new Object[]{
+                listagem.get(i).getId(),
+                listagem.get(i).getNome(),
+                listagem.get(i).getValor(),
+                listagem.get(i).getStatus()
+            });
+        }
+    } catch (Exception e) {
+        e.printStackTrace(); // Apenas para depuração, considere lidar com exceções de forma adequada
+    }
+}
 }
