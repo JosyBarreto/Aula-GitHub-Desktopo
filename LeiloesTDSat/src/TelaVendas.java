@@ -109,7 +109,9 @@ public TelaVendas() {
 
 
     private void btnConsultarvendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarvendasActionPerformed
-         
+      TelaVendas telaVendas = new TelaVendas();
+    telaVendas.setVisible(true);
+
     }//GEN-LAST:event_btnConsultarvendasActionPerformed
 
 
